@@ -2,4 +2,5 @@
 src/.DS_Store
 src/js/.DS_Store
 .lock-waf_darwin_build
+appstore-resources
 build
