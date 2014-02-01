@@ -139,6 +139,7 @@ static void window_load(Window *window) {
   text_layer_set_text_color(text_layer, GColorBlack);
   text_layer_set_text_alignment(text_layer, GTextAlignmentCenter);
   layer_add_child(window_layer, text_layer_get_layer(text_layer));
+  restart();
 }
 
 static void window_unload(Window *window) {
@@ -152,13 +153,13 @@ static void init(void) {
   const uint32_t outbound_size = 128;
   app_message_open(inbound_size, outbound_size);
 
-  default_minutes = persist_exists(MINUTES_KEY) ? persist_read_int(MINUTES_KEY) : 5;
+  default_minutes = persist_exists(MINUTES_KEY) ? persist_read_int(MINUTES_KEY) : 1;
   APP_LOG(APP_LOG_LEVEL_DEBUG, "Initialised minutes to: %d", default_minutes);
   default_seconds = persist_exists(SECONDS_KEY) ? persist_read_int(SECONDS_KEY) : 0;
   APP_LOG(APP_LOG_LEVEL_DEBUG, "Initialised seconds to: %d", default_seconds);
-  default_vibes = persist_exists(VIBES_KEY) ? persist_read_int(VIBES_KEY) : 0;
+  default_vibes = persist_exists(VIBES_KEY) ? persist_read_int(VIBES_KEY) : 1;
   APP_LOG(APP_LOG_LEVEL_DEBUG, "Initialised vibes to: %d", default_vibes);
-  default_flashes = persist_exists(FLASHES_KEY) ? persist_read_int(FLASHES_KEY) : 0;
+  default_flashes = persist_exists(FLASHES_KEY) ? persist_read_int(FLASHES_KEY) : 1;
   APP_LOG(APP_LOG_LEVEL_DEBUG, "Initialised flashes to: %d", default_flashes);
   time_key = "time";
   vibes_key = "vibes";
