@@ -10,7 +10,7 @@
 <style>
  body {
   font-family: 'Open Sans',Helvetica,Arial,sans-serif;
-  font-size: smaller;
+  font-size: extra-large;
   margin: 0;
  }
  header {
@@ -64,9 +64,15 @@
 <form id="settings" method="get" action="#" onsubmit="sendConfig(this); return false;">
 <fieldset>
 <legend>Choose options</legend>
-<p><label class="time">How long? (mm:ss):</label> <input pattern="[0-9]{1,2}:[0-9]{2}" name="time" id="time" value="5:00" /></p>
-<p class="vibes"><input type="checkbox" name="vibes" id="vibes" value="1"><label>Vibrate</label></p>
-<p class="flashes"><input type="checkbox" name="flashes" id="flashes" value="1"><label>Flash screen</label></p>
+<p><label for="time">How long?</label>
+<select id="time">
+ <option value="1:00" selected="selected">1 minute</option>
+ <option value="3:00">3 minutes</option>
+ <option value="5:00">5 minutes</option>
+</select>
+</p>
+<p class="vibes"><input type="checkbox" name="vibes" id="vibes" value="1" checked="checked"><label>Vibrate</label></p>
+<p class="flashes"><input type="checkbox" name="flashes" id="flashes" value="1" checked="checked"><label>Flash screen</label></p>
 <input type="submit" value="Go!" />
 </fieldset>
 </form>
