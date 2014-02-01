@@ -37,8 +37,8 @@ Pebble.addEventListener("webviewclosed",
                     '2': seconds};
     console.log("options formed: " + minutes + ':' + seconds);
     messageQueue.push(timeopts);
-    messageQueue.push({'0': 'vibe', '1': options["1"]});
-    messageQueue.push({'0': 'flash', '1': options["2"]});
+    messageQueue.push({'0': 'vibes', '1': options["1"] ? 1 : 0});
+    messageQueue.push({'0': 'flashes', '1': options["2"] ? 1 : 0});
     sendNextMessage();
   }
 );
