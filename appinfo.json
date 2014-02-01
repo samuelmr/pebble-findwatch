@@ -1,0 +1,18 @@
+{
+  "uuid": "cb1dded4-3d8c-42c6-9056-a908d7a0c383",
+  "shortName": "findwatch",
+  "longName": "Find Watch",
+  "companyName": "Samuel Rinnetmaki",
+  "capabilities": [ "configurable" ],
+  "versionCode": 1,
+  "versionLabel": "1.0.0",
+  "watchapp": {
+    "watchface": false
+  },
+  "appKeys": {
+    "dummy": 0
+  },
+  "resources": {
+    "media": []
+  }
+}
