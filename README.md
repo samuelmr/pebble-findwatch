@@ -12,5 +12,5 @@ flash. You can set how long the watch app will run. You can also turn
 vibrations and flashes on and off.
 
 <a href="http://pblweb.com/appstore/52ed0fe86ccd08de6200004d" title="Find Watch on the Pebble appstore">
-  <img src="/badge/52ed0fe86ccd08de6200004d/white/medium/" />
+  <img src="http://pblweb.com/badge/52ed0fe86ccd08de6200004d/black/large/" />
 </a>
