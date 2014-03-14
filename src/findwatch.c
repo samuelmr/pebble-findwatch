@@ -11,8 +11,7 @@ int minutes;
 int seconds;
 int vibes;
 int flashes;
-int default_minutes;
-int default_seconds;
+int running_length;
 int default_vibes;
 int default_flashes;
 char *time_key;
@@ -44,16 +43,13 @@ static void timer_callback(void *data) {
   APP_LOG(APP_LOG_LEVEL_DEBUG, "Timer: %02d:%02d", minutes, seconds);
   APP_LOG(APP_LOG_LEVEL_DEBUG, "Vibes: %d, flashes: %d", vibes, flashes);
 
-  seconds--;
-  if (seconds < 0) {
-    minutes--;
-    seconds = 59;
-  }
-  if (minutes < 0) {
-    app_timer_cancel(timer);
-    running = 0;
-    minutes = 0;
+  seconds++;
+  if (seconds > 59) {
+    minutes++;
     seconds = 0;
+  }
+  if (minutes >= running_length) {
+    app_timer_cancel(timer);
   }
   else {
     timer = app_timer_register(timer_interval_ms, timer_callback, NULL);
@@ -63,8 +59,8 @@ static void timer_callback(void *data) {
 
 static void reset(void) {
   running = 0;
-  minutes = default_minutes;
-  seconds = default_seconds;
+  minutes = 0;
+  seconds = 0;
   vibes = default_vibes;
   flashes = default_flashes;
   toggle_screen();
@@ -81,7 +77,6 @@ void restart() {
   running = 1;
   timer = app_timer_register(timer_interval_ms, timer_callback, NULL);
   toggle_screen();
-  seconds--;
 }
 
 void in_received_handler(DictionaryIterator *received, void *context) {
@@ -89,10 +84,8 @@ void in_received_handler(DictionaryIterator *received, void *context) {
   APP_LOG(APP_LOG_LEVEL_DEBUG, "Got message from phone: %s", msg_type->value->cstring);
   if (strcmp(msg_type->value->cstring, time_key) == 0) {
     Tuple *mins = dict_read_next(received);
-    default_minutes = mins->value->int8;
-    Tuple *secs = dict_read_next(received);
-    default_seconds = secs->value->int8;
-	APP_LOG(APP_LOG_LEVEL_DEBUG, "New config: %02d:%02d", minutes, seconds);
+    running_length = mins->value->int8;
+    APP_LOG(APP_LOG_LEVEL_DEBUG, "New config: %2d minutes", running_length);
   }
   else {
     Tuple *val = dict_read_next(received);
@@ -153,10 +146,8 @@ static void init(void) {
   const uint32_t outbound_size = 128;
   app_message_open(inbound_size, outbound_size);
 
-  default_minutes = persist_exists(MINUTES_KEY) ? persist_read_int(MINUTES_KEY) : 1;
-  APP_LOG(APP_LOG_LEVEL_DEBUG, "Initialised minutes to: %d", default_minutes);
-  default_seconds = persist_exists(SECONDS_KEY) ? persist_read_int(SECONDS_KEY) : 0;
-  APP_LOG(APP_LOG_LEVEL_DEBUG, "Initialised seconds to: %d", default_seconds);
+  running_length = persist_exists(MINUTES_KEY) ? persist_read_int(MINUTES_KEY) : 0;
+  APP_LOG(APP_LOG_LEVEL_DEBUG, "Initialised running length to: %d", running_length);
   default_vibes = persist_exists(VIBES_KEY) ? persist_read_int(VIBES_KEY) : 1;
   APP_LOG(APP_LOG_LEVEL_DEBUG, "Initialised vibes to: %d", default_vibes);
   default_flashes = persist_exists(FLASHES_KEY) ? persist_read_int(FLASHES_KEY) : 1;
@@ -176,8 +167,7 @@ static void init(void) {
 }
 
 static void deinit(void) {
-  persist_write_int(MINUTES_KEY, default_minutes);
-  persist_write_int(SECONDS_KEY, default_seconds);
+  persist_write_int(MINUTES_KEY, running_length);
   persist_write_int(VIBES_KEY, default_vibes);
   persist_write_int(FLASHES_KEY, default_flashes);
   window_destroy(window);
