@@ -40,18 +40,15 @@ static void toggle_screen(void) {
 
 static void timer_callback(void *data) {
 
-  APP_LOG(APP_LOG_LEVEL_DEBUG, "Timer: %02d:%02d", minutes, seconds);
-  APP_LOG(APP_LOG_LEVEL_DEBUG, "Vibes: %d, flashes: %d", vibes, flashes);
+  // APP_LOG(APP_LOG_LEVEL_DEBUG, "Timer: %02d:%02d", minutes, seconds);
+  // APP_LOG(APP_LOG_LEVEL_DEBUG, "Vibes: %d, flashes: %d", vibes, flashes);
 
   seconds++;
   if (seconds > 59) {
     minutes++;
     seconds = 0;
   }
-  if (minutes >= running_length) {
-    app_timer_cancel(timer);
-  }
-  else {
+  if (minutes < running_length) {
     timer = app_timer_register(timer_interval_ms, timer_callback, NULL);
   }
   toggle_screen();
@@ -146,7 +143,7 @@ static void init(void) {
   const uint32_t outbound_size = 128;
   app_message_open(inbound_size, outbound_size);
 
-  running_length = persist_exists(MINUTES_KEY) ? persist_read_int(MINUTES_KEY) : 0;
+  running_length = persist_exists(MINUTES_KEY) ? persist_read_int(MINUTES_KEY) : 1;
   APP_LOG(APP_LOG_LEVEL_DEBUG, "Initialised running length to: %d", running_length);
   default_vibes = persist_exists(VIBES_KEY) ? persist_read_int(VIBES_KEY) : 1;
   APP_LOG(APP_LOG_LEVEL_DEBUG, "Initialised vibes to: %d", default_vibes);

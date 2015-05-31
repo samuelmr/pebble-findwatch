@@ -2,10 +2,12 @@
   "uuid": "cb1dded4-3d8c-42c6-9056-a908d7a0c383",
   "shortName": "findwatch",
   "longName": "Find Watch",
-  "companyName": "Samuel Rinnetmaki",
-  "capabilities": [ "configurable" ],
+  "companyName": "Samuel Rinnetmäki",
+  "capabilities": [
+    "configurable"
+  ],
   "versionCode": 1,
-  "versionLabel": "1.1",
+  "versionLabel": "1.2",
   "watchapp": {
     "watchface": false
   },
@@ -14,5 +16,10 @@
   },
   "resources": {
     "media": []
-  }
+  },
+  "targetPlatforms": [
+    "aplite",
+    "basalt"
+  ],
+  "sdkVersion": "3"
 }
