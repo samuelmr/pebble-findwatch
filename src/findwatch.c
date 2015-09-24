@@ -30,10 +30,12 @@ static void toggle_screen(void) {
     if (seconds % 2) {
       text_layer_set_background_color(text_layer, GColorBlack);
       text_layer_set_text_color(text_layer, GColorWhite);
+      light_enable(false);
     }
     else {
       text_layer_set_background_color(text_layer, GColorWhite);
       text_layer_set_text_color(text_layer, GColorBlack);
+      light_enable(true);
     }
   }
 }
@@ -108,6 +110,7 @@ static void click_handler(ClickRecognizerRef recognizer, void *context) {
     APP_LOG(APP_LOG_LEVEL_DEBUG, "Stop: %02d:%02d", minutes, seconds);
     app_timer_cancel(timer);
     reset();
+    light_enable(false);
   }
   else {
     restart();

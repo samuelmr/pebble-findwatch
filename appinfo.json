@@ -7,9 +7,10 @@
     "configurable"
   ],
   "versionCode": 1,
-  "versionLabel": "1.2",
+  "versionLabel": "1.4",
   "watchapp": {
-    "watchface": false
+    "watchface": false,
+    "hiddenApp": true
   },
   "appKeys": {
     "dummy": 0
@@ -19,7 +20,8 @@
   },
   "targetPlatforms": [
     "aplite",
-    "basalt"
+    "basalt",
+    "chalk"
   ],
   "sdkVersion": "3"
 }
