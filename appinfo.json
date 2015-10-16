@@ -7,7 +7,7 @@
     "configurable"
   ],
   "versionCode": 1,
-  "versionLabel": "1.4",
+  "versionLabel": "1.5",
   "watchapp": {
     "watchface": false,
     "hiddenApp": true
